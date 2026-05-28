@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Music;
 use App\Http\Requests\StoreMusicRequest;
 use App\Http\Requests\UpdateMusicRequest;
+use Illuminate\Http\Request;
 
 class MusicController extends Controller
 {
@@ -13,7 +14,8 @@ class MusicController extends Controller
      */
     public function index()
     {
-        //
+        $musics = Music::all();
+        return view("musics.index", compact("musics"));
     }
 
     /**
@@ -21,24 +23,42 @@ class MusicController extends Controller
      */
     public function create()
     {
-        //
+        return view("musics.create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMusicRequest $request)
+    public function store(Request $request)
     {
-        //
+        $music = Music::create([
+            "name"=> $request->name,
+            "artist" => $request->artist,
+            "album" => $request->album,
+            "duration" => $request->duration,
+
+        ]);
+        return redirect()->route("musics.index")->with("success","Musica $music->name com Sucesso");
     }
 
     /**
      * Display the specified resource.
      */
+    // public function show(string $id)
+    // {
+    //     $music = Music::findOrFail($id);
+    //     return view("musics.show", compact("music"));
+    // }
+
+    
+    /**
+     * Display the specified resource.
+     */
     public function show(Music $music)
     {
-        //
+        return view("musics.show", compact("music"));
     }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -12,15 +12,14 @@ Route::get('/', function (Request $request) {
 
 Route::get('/users', function () {
     $users = User::all();
-    Log::info('Chamei rota user');
-    // $pdo->query("SELECT * FROM users;") 
+
     return $users;
 });
 
 
 Route::resource('/musics', MusicController::class);
 
-Route::get('/musics', [MusicController::class, 'index']);
-Route::get('/musics/create', [MusicController::class, 'create']);
+Route::get('/musics', [MusicController::class, 'index'])->name('musics.index');
+Route::get('/musics/create', [MusicController::class, 'create'])->name('musics.create');
 Route::post('/musics', [MusicController::class, 'store']);
-Route::post('/musics/{id}', [MusicController::class, 'show']);
+Route::get('/musics/{music}', [MusicController::class, 'show']);
