@@ -38,7 +38,8 @@ class MusicController extends Controller
             "duration" => $request->duration,
 
         ]);
-        return redirect()->route("musics.index")->with("success","Musica $music->name com Sucesso");
+        return redirect()->route("musics.index")
+            ->with("success","Musica $music->name com Sucesso");
     }
 
     /**
@@ -56,6 +57,9 @@ class MusicController extends Controller
      */
     public function show(Music $music)
     {
+        $param = ['music' => $music];
+        $param = compact("music");
+
         return view("musics.show", compact("music"));
     }
 
@@ -65,15 +69,25 @@ class MusicController extends Controller
      */
     public function edit(Music $music)
     {
-        //
+        // $param = ['music' => $music];
+        // $param = compact("music");
+        return view("musics.edit", compact("music"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMusicRequest $request, Music $music)
+    public function update(Request $request, Music $music)
     {
-        //
+        $music->update([
+            "name"=> $request->name,
+            "artist" => $request->artist,
+            "album" => $request->album,
+            "duration" => $request->duration,
+        ]);
+        return redirect()->
+            route("musics.index")->with("success","Musica $music->name atualizada com sucesso");
+
     }
 
     /**
@@ -81,6 +95,9 @@ class MusicController extends Controller
      */
     public function destroy(Music $music)
     {
-        //
+        $music->delete();
+        return redirect()->
+            route("musics.index")->with("success","Musica $music->name deletada com sucesso");
+
     }
 }
