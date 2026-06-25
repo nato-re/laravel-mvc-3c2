@@ -3,6 +3,7 @@
 ## Dependências
 - [php](https://www.php.net/downloads.php?os=windows&osvariant=windows-native&version=default)
 - [composer](https://getcomposer.org/download/)
+- [node](https://nodejs.org/en/download) (busque o instalador .msi)
 
 ## Como iniciar?
 
@@ -12,6 +13,7 @@ npm install
 npm run build
 cp .env.example .env
 php artisan key:generate
+php artisan migrate --seed
 php artisan serve
 ```
 
